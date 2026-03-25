@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log Activity - FITPULSE</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .form-section { margin-bottom: 2rem; }
+        .section-title { color: var(--muted-foreground); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        
+        .row { display: flex; gap: 2rem; margin-bottom: 1rem; }
+        .col { flex: 1; }
+        
+        .slider-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: -5px; }
+        .slider-label { font-size: 0.85rem; font-weight: 500; color: white; }
+        .slider-value { font-size: 1.1rem; font-weight: 700; color: #4ade80; font-family: var(--font-syne); }
+        .slider-unit { font-size: 0.75rem; color: var(--muted-foreground); font-weight: 400; }
+        
+        .health-status-box { background: rgba(74, 222, 128, 0.1); border: 1px solid rgba(74, 222, 128, 0.2); border-radius: 8px; padding: 1rem; display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+        .health-status-icon { background: #4ade80; color: black; width: 24px; height: 24px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        
+        .btn-save { background: linear-gradient(to right, #4ade80, #3b82f6); color: black; border-radius: 8px; padding: 1rem; width: 100%; border: none; font-weight: bold; font-family: var(--font-syne); font-size: 1rem; cursor: pointer; transition: opacity 0.2s; }
+        .btn-save:hover { opacity: 0.9; }
+
+        input[type="datetime-local"] { width: 100%; padding: 0.8rem; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px; color: white; outline: none; }
+        input[type="text"]:disabled { opacity: 0.7; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+    <div class="layout-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <div class="icon-box gradient-bg" style="width: 2rem; height: 2rem;">
+                    <svg viewBox="0 0 30 30" fill="none" width="16" height="16">
+                        <path d="M2 15h5l3-8 5 16 3-10 3 5h7" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </div>
+                <h2>FitPulse</h2>
+            </div>
+
+            <div class="user-snippet">
+                <div class="avatar" id="sidebar-avatar">A</div>
+                <div class="user-snippet-details">
+                    <h4 id="sidebar-name">admin</h4>
+                    <span>Active</span>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="dashboard.html" class="nav-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                    Dashboard
+                </a>
+                <a href="log-activity.html" class="nav-link active">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20v-8m0 0V4m0 8h8m-8 0H4"></path></svg>
+                    Log Activity
+                </a>
+                <a href="profile.html" class="nav-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    Profile
+                </a>
+            </nav>
+
+            <a id="logout-btn" class="logout-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                Logout
+            </a>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="page-header">
+                <h1>Log Activity</h1>
+                <p>Record your daily health metrics</p>
+            </div>
+
+            <div class="glass-card" style="padding: 2rem;">
+                <form id="activity-form">
+                    
+                    <!-- Identification -->
+                    <div class="form-section">
+                        <div class="section-title">📍 IDENTIFICATION</div>
+                        <label class="slider-label">Display Name</label>
+                        <div class="input-wrapper" style="margin-top: 0.5rem;">
+                            <span class="input-icon">👤</span>
+                            <input type="text" id="display-name" class="input-field" disabled value="Loading...">
+                        </div>
+                    </div>
+
+                    <!-- Vitals -->
+                    <div class="form-section">
+                        <div class="section-title">❤️ VITALS</div>
+                        <div class="slider-header">
+                            <span class="slider-label">Heart Rate</span>
+                            <span class="slider-value" id="val-hr">72 <span class="slider-unit">bpm</span></span>
+                        </div>
+                        <input type="range" id="input-hr" min="40" max="200" value="72">
+                        <div class="range-labels">
+                            <span>40</span>
+                            <span class="highlight">Normal: 60-100</span>
+                            <span>200</span>
+                        </div>
+                    </div>
+
+                    <!-- Activity -->
+                    <div class="form-section">
+                        <div class="section-title">🏃 ACTIVITY</div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="slider-header">
+                                    <span class="slider-label">Steps Count</span>
+                                    <span class="slider-value" id="val-steps">6,000</span>
+                                </div>
+                                <input type="range" id="input-steps" min="0" max="20000" step="500" value="6000">
+                            </div>
+                            <div class="col">
+                                <div class="slider-header">
+                                    <span class="slider-label">Calories Burned</span>
+                                    <span class="slider-value" id="val-cal">400 <span class="slider-unit">kcal</span></span>
+                                </div>
+                                <input type="range" id="input-cal" min="0" max="4000" step="50" value="400">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recovery -->
+                    <div class="form-section">
+                        <div class="section-title">🌙 RECOVERY</div>
+                        <div class="slider-header">
+                            <span class="slider-label">Sleep Duration</span>
+                            <span class="slider-value" id="val-sleep">7 <span class="slider-unit">hours</span></span>
+                        </div>
+                        <input type="range" id="input-sleep" min="0" max="14" step="0.5" value="7">
+                        <div class="range-labels">
+                            <span>0h</span>
+                            <span class="highlight" style="color: hsl(180, 100%, 50%)">Recommended: 7-9h</span>
+                            <span>14h</span>
+                        </div>
+                    </div>
+
+                    <!-- Timestamp -->
+                    <div class="form-section">
+                        <div class="section-title">📅 TIME STAMP</div>
+                        <input type="datetime-local" id="input-date" required>
+                    </div>
+
+                    <!-- Status -->
+                    <div class="health-status-box" id="status-box">
+                        <div class="health-status-icon">✓</div>
+                        <div>
+                            <div style="font-weight: bold; color: white;" id="status-title">Health Status: Normal</div>
+                            <div style="font-size: 0.8rem; color: var(--muted-foreground);" id="status-desc">All vitals within healthy ranges</div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-save" id="save-btn">↓ Save Health Entry</button>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/log-activity.js"></script>
+</body>
+</html>

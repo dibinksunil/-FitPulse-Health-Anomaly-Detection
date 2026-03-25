@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - FITPULSE</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .profile-banner { background: var(--card-bg); border: 1px solid var(--border); border-top: 3px solid hsl(180, 100%, 50%); border-radius: 12px; padding: 2rem; display: flex; align-items: center; gap: 2rem; margin-bottom: 2rem; }
+        .profile-avatar { width: 80px; height: 80px; border-radius: 50%; background: var(--cyan); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: 800; color: black; font-family: var(--font-syne); }
+        .profile-info h2 { margin: 0 0 0.5rem 0; font-size: 1.5rem; color: white; }
+        .profile-info p { margin: 0; color: var(--muted-foreground); font-size: 0.9rem; }
+        .profile-stats { margin-top: 1rem; color: white; font-weight: bold; font-size: 1.1rem; }
+        .profile-stats span { font-size: 0.8rem; font-weight: normal; color: var(--muted-foreground); display: block; }
+
+        .profile-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        .profile-section { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; }
+        .section-header { font-size: 0.8rem; font-weight: bold; color: var(--muted-foreground); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem; }
+
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        select.input-field { appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 1rem center; background-size: 1em; padding-right: 2.5rem; }
+
+        .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
+        .summary-card { background: rgba(0,0,0,0.2); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; }
+        .summary-card h4 { margin: 0 0 0.5rem 0; color: var(--muted-foreground); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .summary-card .value { margin: 0; font-size: 1.25rem; font-weight: bold; }
+        
+        .val-hr { color: #ef4444; } .val-steps { color: #3b82f6; } .val-sleep { color: #a855f7; } .val-cal { color: #f59e0b; }
+
+        .action-buttons { display: flex; gap: 1rem; margin-bottom: 2rem; }
+        .btn-outline { background: transparent; border: 1px solid var(--cyan); color: var(--cyan); padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 0.875rem; font-weight: 500;}
+        .btn-outline:hover { background: hsla(180, 100%, 50%, 0.1); }
+        .btn-outline.purple { border-color: #a855f7; color: #a855f7; }
+        .btn-outline.purple:hover { background: rgba(168, 85, 247, 0.1); }
+
+        .activity-list { display: flex; flex-direction: column; gap: 1rem; }
+        .activity-item { display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px; border: 1px solid var(--border); }
+        .act-left { display: flex; align-items: center; gap: 1rem; }
+        .act-dot { width: 8px; height: 8px; border-radius: 50%; background: #4ade80; }
+        .act-time { font-weight: 600; color: white; display: block; font-size: 0.9rem;}
+        .act-desc { color: var(--muted-foreground); font-size: 0.8rem; }
+        .act-right { font-weight: bold; color: #4ade80; font-family: var(--font-syne); }
+    </style>
+</head>
+<body>
+    <div class="layout-wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <div class="icon-box gradient-bg" style="width: 2rem; height: 2rem;"><svg viewBox="0 0 30 30" fill="none" width="16" height="16"><path d="M2 15h5l3-8 5 16 3-10 3 5h7" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+                <h2>FitPulse</h2>
+            </div>
+            <div class="user-snippet">
+                <div class="avatar" id="sidebar-avatar">A</div>
+                <div class="user-snippet-details"><h4 id="sidebar-name">admin</h4><span>Active</span></div>
+            </div>
+            <nav class="nav-menu">
+                <a href="dashboard.html" class="nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg> Dashboard</a>
+                <a href="log-activity.html" class="nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20v-8m0 0V4m0 8h8m-8 0H4"></path></svg> Log Activity</a>
+                <a href="profile.html" class="nav-link active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> Profile</a>
+            </nav>
+            <a id="logout-btn" class="logout-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg> Logout</a>
+        </aside>
+
+        <main class="main-content">
+            <div class="page-header"><p style="color:var(--muted-foreground); margin:0 0 1rem 0;">Manage your personal information and health settings</p></div>
+
+            <div class="profile-banner">
+                <div class="profile-avatar" id="banner-avatar">A</div>
+                <div class="profile-info">
+                    <h2 id="banner-name">admin</h2>
+                    <p id="banner-subtitle">@admin • Member</p>
+                </div>
+                <div class="profile-stats">
+                    <div id="banner-entries">0</div>
+                    <span>Entries</span>
+                </div>
+            </div>
+
+            <div class="profile-layout">
+                <div class="profile-section">
+                    <div class="section-header">👤 PERSONAL INFO</div>
+                    <form id="profile-form">
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label class="uppercase-label">Full Name</label>
+                            <input type="text" id="prof-name" class="input-field" placeholder="John Doe">
+                        </div>
+                        <div class="form-grid" style="margin-bottom: 1.5rem;">
+                            <div class="form-group">
+                                <label class="uppercase-label">Age</label>
+                                <input type="number" id="prof-age" class="input-field" placeholder="e.g. 28">
+                            </div>
+                            <div class="form-group">
+                                <label class="uppercase-label">Gender</label>
+                                <select id="prof-gender" class="input-field" style="padding-left: 1rem;">
+                                    <option value="" disabled selected>Select gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="section-header" style="margin-top: 2rem;">📏 BODY METRICS</div>
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label class="uppercase-label">Height (cm)</label>
+                            <input type="number" id="prof-height" class="input-field" placeholder="e.g. 175">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label class="uppercase-label">Weight (kg)</label>
+                            <input type="number" id="prof-weight" class="input-field" placeholder="e.g. 70">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 2rem;">
+                            <label class="uppercase-label">Activity Level</label>
+                            <select id="prof-activity" class="input-field" style="padding-left: 1rem;">
+                                <option value="Sedentary">Sedentary (Little/no exercise)</option>
+                                <option value="Lightly active">Lightly active (1-3 days/wk)</option>
+                                <option value="Moderately active">Moderately active (3-5 days/wk)</option>
+                                <option value="Very active">Very active (6-7 days/wk)</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn-primary gradient-bg" id="save-prof-btn">Save Profile &rarr;</button>
+                    </form>
+                </div>
+
+                <div class="profile-section">
+                    <div class="section-header">📊 HEALTH SUMMARY</div>
+                    <div class="summary-grid">
+                        <div class="summary-card">
+                            <h4>AVG HEART RATE</h4>
+                            <p class="value val-hr"><span id="avg-hr">--</span> <span style="font-size: 0.8rem; font-weight: normal;">bpm</span></p>
+                        </div>
+                        <div class="summary-card">
+                            <h4>AVG STEPS</h4>
+                            <p class="value val-steps"><span id="avg-steps">--</span></p>
+                        </div>
+                        <div class="summary-card">
+                            <h4>AVG SLEEP</h4>
+                            <p class="value val-sleep"><span id="avg-sleep">--</span><span style="font-size: 0.8rem; font-weight: normal;">h</span></p>
+                        </div>
+                        <div class="summary-card">
+                            <h4>AVG CALORIES</h4>
+                            <p class="value val-cal"><span id="avg-cal">--</span> <span style="font-size: 0.8rem; font-weight: normal;">kcal</span></p>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button id="download-csv-btn" class="btn-outline">Download CSV</button>
+                        <button id="download-excel-btn" class="btn-outline purple">Download Excel</button>
+                    </div>
+
+                    <div class="section-header" style="margin-top: 2rem;">🕒 RECENT ACTIVITY</div>
+                    <div class="activity-list" id="activity-list">
+                        <!-- populated via js -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/profile.js"></script>
+</body>
+</html>

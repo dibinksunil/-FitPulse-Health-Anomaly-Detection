@@ -1,0 +1,106 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "login",
+      "password": "login"
+    },
+    {
+      "id": 2,
+      "username": "sa",
+      "password": "123"
+    },
+    {
+      "id": 3,
+      "username": "sayant",
+      "password": "sayanth"
+    },
+    {
+      "id": 4,
+      "username": "sayanth",
+      "password": "123123",
+      "profile": {
+        "fullName": "sayanth",
+        "age": "",
+        "gender": "Male",
+        "height": "170",
+        "weight": "60",
+        "activityLevel": "Moderately active"
+      }
+    }
+  ],
+  "logs": [
+    {
+      "id": 1,
+      "userId": 3,
+      "date": "2026-03-24",
+      "heartRate": 80,
+      "calories": 1500,
+      "steps": 10000,
+      "sleep": 8
+    },
+    {
+      "id": 2,
+      "userId": 3,
+      "date": "2026-03-23",
+      "heartRate": 100,
+      "calories": 1700,
+      "steps": 8000,
+      "sleep": 8.5
+    },
+    {
+      "id": 3,
+      "userId": 3,
+      "date": "2026-03-22",
+      "heartRate": 105,
+      "calories": 1650,
+      "steps": 8050,
+      "sleep": 7
+    },
+    {
+      "id": 4,
+      "userId": 4,
+      "date": "2026-03-24T21:41",
+      "heartRate": 88,
+      "calories": 1350,
+      "steps": 3500,
+      "sleep": 5
+    },
+    {
+      "id": 5,
+      "userId": 4,
+      "date": "2026-03-24T21:41",
+      "heartRate": 76,
+      "calories": 1100,
+      "steps": 8000,
+      "sleep": 9.5
+    },
+    {
+      "id": 6,
+      "userId": 4,
+      "date": "2026-03-24T21:42",
+      "heartRate": 99,
+      "calories": 400,
+      "steps": 1000,
+      "sleep": 7
+    },
+    {
+      "id": 7,
+      "userId": 1,
+      "date": "2026-03-25T21:36",
+      "heartRate": 72,
+      "calories": 400,
+      "steps": 9000,
+      "sleep": 7.5
+    },
+    {
+      "id": 8,
+      "userId": 1,
+      "date": "2026-03-25T21:36",
+      "heartRate": 72,
+      "calories": 300,
+      "steps": 4500,
+      "sleep": 6
+    }
+  ]
+}

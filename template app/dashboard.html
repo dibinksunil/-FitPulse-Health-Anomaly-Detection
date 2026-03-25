@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - FITPULSE</title>
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .kpi-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .kpi-card h3 {
+            margin: 0; color: var(--muted-foreground); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em;
+        }
+        .kpi-card .value { font-size: 2rem; font-weight: 800; color: white; font-family: var(--font-syne); margin: 0; }
+        .kpi-card .unit { font-size: 0.875rem; color: var(--muted-foreground); font-weight: 400; font-family: var(--font-inter); }
+
+        .charts-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .chart-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            height: 250px;
+            display: flex;
+            flex-direction: column;
+        }
+        .chart-header {
+            display: flex; justify-content: space-between; margin-bottom: 1rem;
+        }
+        .chart-title { font-size: 0.8rem; font-weight: bold; color: var(--muted-foreground); text-transform: uppercase; letter-spacing: 0.05em; }
+        .chart-unit { font-size: 0.75rem; color: var(--blue); }
+        .chart-container-inner { flex: 1; position: relative; }
+
+        .health-alert-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex; flex-direction: column; gap: 1rem;
+        }
+        .alert-content {
+            background: rgba(74, 222, 128, 0.05); border-left: 4px solid #4ade80; padding: 1rem; border-radius: 0 8px 8px 0;
+        }
+        .alert-content h4 { color: #4ade80; margin: 0 0 0.25rem 0; font-size: 0.9rem; text-transform: uppercase; font-weight: 800;}
+        .alert-content p { color: var(--muted-foreground); margin: 0; font-size: 0.85rem; }
+
+        .table-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        .table-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .table-title { font-size: 0.8rem; font-weight: bold; color: var(--muted-foreground); text-transform: uppercase; letter-spacing: 0.05em; margin: 0; }
+        
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th { color: var(--muted-foreground); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; padding-bottom: 1rem; border-bottom: 1px solid var(--border); font-weight: 500; }
+        td { padding: 1rem 0; color: white; font-size: 0.9rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .td-muted { color: var(--muted-foreground); font-size: 0.85rem; }
+        
+        .status-badge { background: rgba(74, 222, 128, 0.1); color: #4ade80; padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.75rem; font-weight: 600; border: 1px solid rgba(74, 222, 128, 0.2); }
+        .status-badge.warning { background: rgba(239, 68, 68, 0.1); color: #ef4444; border-color: rgba(239, 68, 68, 0.2); }
+        
+        .btn-delete { background: transparent; border: none; color: var(--muted-foreground); cursor: pointer; transition: color 0.2s; }
+        .btn-delete:hover { color: #ef4444; }
+    </style>
+</head>
+<body>
+    <div class="layout-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <div class="icon-box gradient-bg" style="width: 2rem; height: 2rem;">
+                    <svg viewBox="0 0 30 30" fill="none" width="16" height="16">
+                        <path d="M2 15h5l3-8 5 16 3-10 3 5h7" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </div>
+                <h2>FitPulse</h2>
+            </div>
+
+            <div class="user-snippet">
+                <div class="avatar" id="sidebar-avatar">A</div>
+                <div class="user-snippet-details">
+                    <h4 id="sidebar-name">admin</h4>
+                    <span>Active</span>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="dashboard.html" class="nav-link active">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                    Dashboard
+                </a>
+                <a href="log-activity.html" class="nav-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20v-8m0 0V4m0 8h8m-8 0H4"></path></svg>
+                    Log Activity
+                </a>
+                <a href="profile.html" class="nav-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    Profile
+                </a>
+            </nav>
+
+            <a id="logout-btn" class="logout-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                Logout
+            </a>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top KPIs -->
+            <div class="dashboard-grid">
+                <div class="kpi-card" style="justify-content: center; align-items: center; text-align: center; border-color: rgba(0, 255, 255, 0.2);">
+                    <h3 style="color: white; font-size: 0.85rem;">NAME</h3>
+                    <p class="value" id="kpi-name">admin</p>
+                </div>
+                <div class="kpi-card">
+                    <h3>HEART RATE</h3>
+                    <p class="value"><span id="kpi-hr">--</span> <span class="unit">bpm</span></p>
+                </div>
+                <div class="kpi-card">
+                    <h3>STEPS</h3>
+                    <p class="value"><span id="kpi-steps">--</span> <span class="unit">today</span></p>
+                </div>
+                <div class="kpi-card">
+                    <h3>SLEEP</h3>
+                    <p class="value"><span id="kpi-sleep">--</span> <span class="unit">hours</span></p>
+                </div>
+                <div class="kpi-card">
+                    <h3>CALORIES</h3>
+                    <p class="value"><span id="kpi-cal">--</span> <span class="unit">kcal</span></p>
+                </div>
+            </div>
+
+            <!-- Charts Row 1 -->
+            <div class="charts-section">
+                <div class="chart-box">
+                    <div class="chart-header">
+                        <span class="chart-title">❤️ HEART RATE TREND</span>
+                        <span class="chart-unit" style="color: #ef4444">bpm</span>
+                    </div>
+                    <div class="chart-container-inner"><canvas id="chartHrTrend"></canvas></div>
+                </div>
+                <div class="chart-box">
+                    <div class="chart-header">
+                        <span class="chart-title">🏃 DAILY STEPS</span>
+                        <span class="chart-unit" style="color: #3b82f6">steps</span>
+                    </div>
+                    <div class="chart-container-inner"><canvas id="chartStepsBar"></canvas></div>
+                </div>
+            </div>
+
+            <!-- Charts Row 2 -->
+            <div class="charts-section">
+                <div class="health-alert-box">
+                    <span class="chart-title">⚡ HEALTH ALERTS</span>
+                    <div class="alert-content" id="health-alert-content">
+                        <h4>GREAT HEALTH DAY!</h4>
+                        <p>All metrics within optimal range</p>
+                    </div>
+                </div>
+                <div class="chart-box">
+                    <div class="chart-header">
+                        <span class="chart-title">🔥 CALORIES & 🌙 SLEEP</span>
+                        <span class="chart-unit" style="color: #f59e0b">trend</span>
+                    </div>
+                    <div class="chart-container-inner"><canvas id="chartCalSleep"></canvas></div>
+                </div>
+            </div>
+
+            <!-- Recent Entries Table -->
+            <div class="table-section">
+                <div class="table-header-row">
+                    <h3 class="table-title">RECENT ENTRIES</h3>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>DATE</th>
+                            <th>HEART RATE</th>
+                            <th>STEPS</th>
+                            <th>SLEEP</th>
+                            <th>CALORIES</th>
+                            <th>STATUS</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="entries-tbody">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
