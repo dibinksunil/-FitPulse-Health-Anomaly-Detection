@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-=======
+
 # -FitPulse-Health-Anomaly-Detection
 >>>>>>> ced8b61cdebbc1909a468203b14b82d94379ae87
 # FitPulse
