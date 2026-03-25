@@ -1,6 +1,5 @@
 
 # -FitPulse-Health-Anomaly-Detection
->>>>>>> ced8b61cdebbc1909a468203b14b82d94379ae87
 # FitPulse
 
 FitPulse is an intelligent health companion web application designed to help users track and monitor their daily physical well-being. By recording heart rate, calories burned, step count, and sleep duration, FitPulse simplifies personal health management with visual charts and detailed logs.
